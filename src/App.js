@@ -47,9 +47,9 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">A Todolist app using ReactJS</h1>
         </header>
-        <p className="App-intro">
+        <div className="App-intro">
           <Todolist/>
-        </p>
+        </div>
       </div>
     );
   }
