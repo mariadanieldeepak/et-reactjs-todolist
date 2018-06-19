@@ -31,6 +31,16 @@ class Todolist extends Component {
         });
     }
 
+    processRemove(index) {
+        // Verify if `index` is received.
+        console.log("Remove: " + index);
+
+        let updatedItems = this.state.items.filter((item, itemIndex) => itemIndex !== index);
+        this.setState({
+            items: updatedItems
+        })
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -49,7 +59,7 @@ class Todolist extends Component {
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
                             // Keys help React identify which items have changed, are added, or are removed.
-                            <li key={index}>{item} <a href="#">Edit</a> | <a href="#">Remove</a></li>
+                            <li key={index}>{item} <a href="#">Edit</a> | <button type="button" onClick={this.processRemove.bind(this, index)}>Remove</button></li>
                         ))}
                     </ul>
                 </div>
