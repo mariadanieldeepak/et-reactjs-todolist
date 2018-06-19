@@ -41,6 +41,11 @@ class Todolist extends Component {
         })
     }
 
+    processEdit(index) {
+        // Verify if `index` is received.
+        console.log("Edit: " + index);
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -59,7 +64,11 @@ class Todolist extends Component {
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
                             // Keys help React identify which items have changed, are added, or are removed.
-                            <li key={index}>{item} <a href="#">Edit</a> | <button type="button" onClick={this.processRemove.bind(this, index)}>Remove</button></li>
+                            <li key={index}>
+                                <span className={"Todolist-item-" + index}>{item}</span>
+                                <input type="text" className={"Todolist-edit-item-" + index} defaultValue={item} />
+                                <button type="button" onClick={this.processEdit.bind(this, index)}>Edit</button> |
+                                <button type="button" onClick={this.processRemove.bind(this, index)}>Remove</button></li>
                         ))}
                     </ul>
                 </div>
