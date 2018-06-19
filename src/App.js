@@ -7,11 +7,23 @@ class Todolist extends Component {
         super(props);
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
+        this.processAddItem = this.processAddItem.bind(this);
+
+        this.state = {currentItem: "", items: []}
     }
 
     processSubmit(e) {
         e.preventDefault();
-        console.log("Submitted");
+
+        this.setState((prevState, props) => ({
+            items: prevState.items.concat([this.state.currentItem])
+        }));
+    }
+
+    processAddItem(e) {
+        this.setState({
+            currentItem: e.target.value
+        });
     }
 
     // Every Component must render()
@@ -24,14 +36,16 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" type="text" />
+                            <input className="Todolist-add-item" type="text" onChange={this.processAddItem} />
                             <button type="submit">Submit</button>
                         </form>
+                        {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
                     </div>
                     <ul className="Todolist-items">
-                        <li>Task 1</li>
-                        <li>Task 2</li>
-                        <li>Task 3</li>
+                        {this.state.items.map((item, index) => (
+                            // Keys help React identify which items have changed, are added, or are removed.
+                            <li key={index}>{item} <a href="#">Edit</a> | <a href="#">Remove</a></li>
+                        ))}
                     </ul>
                 </div>
             </div>
