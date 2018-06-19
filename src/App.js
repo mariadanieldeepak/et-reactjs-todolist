@@ -15,6 +15,11 @@ class Todolist extends Component {
     processSubmit(e) {
         e.preventDefault();
 
+        // Do not add empty tasks.
+        if (! this.state.items.length && ! this.state.currentItem) {
+            return;
+        }
+
         this.setState((prevState, props) => ({
             items: prevState.items.concat([this.state.currentItem])
         }));
