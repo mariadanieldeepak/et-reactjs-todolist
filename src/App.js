@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import jQuery from 'jquery';
 
 class Todolist extends Component {
     constructor(props) {
@@ -44,6 +45,32 @@ class Todolist extends Component {
     processEdit(index) {
         // Verify if `index` is received.
         console.log("Edit: " + index);
+
+        jQuery('.Todolist-edit-item-' + index).show();
+        jQuery('.Todolist-item-' + index).hide();
+    }
+
+    getClassNameFromTarget(elem) {
+        return elem.className;
+    }
+
+    processItemEditOnChange(e) {
+        console.log(e.target.value);
+
+        let editInputClass = this.getClassNameFromTarget(e.target),
+            itemIndex = jQuery('.' + editInputClass).data('index'),
+            updatedItems = this.state.items;
+
+        updatedItems[itemIndex] = e.target.value;
+
+        this.setState({
+            items: updatedItems
+        });
+    }
+
+    processItemEditOnBlur(index) {
+        jQuery('.Todolist-edit-item-' + index).hide();
+        jQuery('.Todolist-item-' + index).show();
     }
 
     // Every Component must render()
@@ -66,9 +93,22 @@ class Todolist extends Component {
                             // Keys help React identify which items have changed, are added, or are removed.
                             <li key={index}>
                                 <span className={"Todolist-item-" + index}>{item}</span>
-                                <input type="text" className={"Todolist-edit-item-" + index} defaultValue={item} />
-                                <button type="button" onClick={this.processEdit.bind(this, index)}>Edit</button> |
-                                <button type="button" onClick={this.processRemove.bind(this, index)}>Remove</button></li>
+                                <input type="text"
+                                       className={"Todolist-edit-item-" + index}
+                                       value={item} hidden="hidden"
+                                       onChange={this.processItemEditOnChange.bind(this)}
+                                       onBlur={this.processItemEditOnBlur.bind(this, index)}
+                                       data-index={index} />
+                                <button type="button"
+                                        className={"Todolist-item-edit-btn-" + index}
+                                        onClick={this.processEdit.bind(this, index)}>
+                                    Edit
+                                </button> |
+                                <button type="button"
+                                        onClick={this.processRemove.bind(this, index)}>
+                                    Remove
+                                </button>
+                            </li>
                         ))}
                     </ul>
                 </div>
