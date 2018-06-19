@@ -3,6 +3,17 @@ import logo from './logo.svg';
 import './App.css';
 
 class Todolist extends Component {
+    constructor(props) {
+        super(props);
+        // Bind `this` to bind processSubmit to bind to the context of Todolist.
+        this.processSubmit = this.processSubmit.bind(this);
+    }
+
+    processSubmit(e) {
+        e.preventDefault();
+        console.log("Submitted");
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -12,7 +23,7 @@ class Todolist extends Component {
                 <div className="Todolist-header">Hello! Check out the tasks you've added.</div>
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
-                        <form>
+                        <form onSubmit={this.processSubmit}>
                             <input className="Todolist-add-item" type="text" />
                             <button type="submit">Submit</button>
                         </form>
