@@ -7,7 +7,23 @@ class Todolist extends Component {
     render() {
         // Render() must return something or should return `null`;
         return (
-            <div className="Todolist-welcome">Hello! Check out the tasks you've added.</div>
+            // Return must contain only one parent element.
+            <div className="Todolist">
+                <div className="Todolist-header">Hello! Check out the tasks you've added.</div>
+                <div className="Todolist-body">
+                    <div className="Todolist-add-item-container">
+                        <form>
+                            <input className="Todolist-add-item" type="text" />
+                            <button type="submit">Submit</button>
+                        </form>
+                    </div>
+                    <ul className="Todolist-items">
+                        <li>Task 1</li>
+                        <li>Task 2</li>
+                        <li>Task 3</li>
+                    </ul>
+                </div>
+            </div>
         );
     }
 }
