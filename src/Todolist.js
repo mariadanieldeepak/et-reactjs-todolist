@@ -43,12 +43,12 @@ class TodolistItem extends Component {
         let editItemField;
         if (this.state.isEdit) {
             editItemField = <input type="text"
-                                  defaultValue={this.props.item}
+                                  value={this.props.item}
                                   onChange={this.processItemTextOnChange} />;
         } else {
             editItemField = <input type="text"
                                   hidden
-                                  defaultValue={this.props.item}
+                                  value={this.props.item}
                                   onChange={this.processItemTextOnChange} />;
         }
 
@@ -93,47 +93,6 @@ class Todolist extends Component {
         this.setState({
             currentItem: e.target.value
         });
-    }
-
-    processRemove(index) {
-        // Verify if `index` is received.
-        console.log("Remove: " + index);
-
-        let updatedItems = this.state.items.filter((item, itemIndex) => itemIndex !== index);
-        this.setState({
-            items: updatedItems
-        })
-    }
-
-    processEdit(index) {
-        // Verify if `index` is received.
-        console.log("Edit: " + index);
-
-        jQuery('.Todolist-edit-item-' + index).show();
-        jQuery('.Todolist-item-' + index).hide();
-    }
-
-    getClassNameFromTarget(elem) {
-        return elem.className;
-    }
-
-    processItemEditOnChange(e) {
-        console.log(e.target.value);
-
-        let editInputClass = this.getClassNameFromTarget(e.target),
-            itemIndex = jQuery('.' + editInputClass).data('index'),
-            updatedItems = this.state.items;
-
-        updatedItems[itemIndex] = e.target.value;
-
-        this.setState({
-            items: updatedItems
-        });
-    }
-
-    processItemEditOnBlur(index) {
-        jQuery('.Todolist-edit-item-' + index).hide();
-        jQuery('.Todolist-item-' + index).show();
     }
 
     processOnItemChange(updatedItem, index) {
