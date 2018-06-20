@@ -42,19 +42,23 @@ class TodolistItem extends Component {
     render() {
         let editItemField;
         if (this.state.isEdit) {
-            editItemField = <input type="text"
+            editItemField = <span>
+                                <input type="text"
                                   value={this.props.item}
-                                  onChange={this.processItemTextOnChange} />;
+                                  onChange={this.processItemTextOnChange} />
+                            </span>;
         } else {
-            editItemField = <input type="text"
-                                  hidden
-                                  value={this.props.item}
-                                  onChange={this.processItemTextOnChange} />;
+            editItemField = <span>
+                                <span>{this.props.item}</span>
+                                <input type="text"
+                                      hidden
+                                      value={this.props.item}
+                                      onChange={this.processItemTextOnChange} />
+                            </span>;
         }
 
         return (
             <li>
-                <span>{this.props.item}</span>
                 {editItemField}
                 <Button label="Edit" onClick={this.onItemEditBtnClick} />
                  |
