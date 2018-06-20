@@ -1,12 +1,23 @@
 import React, { Component } from 'react';
 import jQuery from 'jquery';
 
+class Button extends Component {
+    render() {
+        return (
+            <button type="button" onClick={this.props.onClick}>
+                {this.props.label}
+            </button>
+        );
+    }
+}
+
 class TodolistItem extends Component {
     constructor(props) {
         super(props);
 
         this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
-        this.onItemEditBtnChange = this.onItemEditBtnChange.bind(this);
+        this.onItemEditBtnClick = this.onItemEditBtnClick.bind(this);
+        this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
         this.state = {isEdit: false}
     }
 
@@ -15,12 +26,16 @@ class TodolistItem extends Component {
         this.props.onItemChange(e.target.value, this.props.itemIndex);
     }
 
-    onItemEditBtnChange() {
+    onItemEditBtnClick() {
         if (this.state.isEdit) {
             this.setState({isEdit: false});
         } else {
             this.setState({isEdit: true});
         }
+    }
+
+    onItemRemoveBtnClick() {
+        // Remove an item.
     }
 
     render() {
@@ -40,12 +55,9 @@ class TodolistItem extends Component {
             <li>
                 <span>{this.props.item}</span>
                 {editItemField}
-                <button type="button" onClick={this.onItemEditBtnChange}>
-                    Edit
-                </button> |
-                <button type="button">
-                    Remove
-                </button>
+                <Button label="Edit" onClick={this.onItemEditBtnClick} />
+                 |
+                <Button label="Remove" onClick={this.onItemRemoveBtnClick} />
             </li>
         );
     }
