@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import jQuery from 'jquery';
 
 class Button extends Component {
     render() {
