@@ -1,6 +1,23 @@
 import React, { Component } from 'react';
 import jQuery from 'jquery';
 
+class TodolistItem extends Component {
+    render() {
+        return (
+            <li>
+                <span>{this.props.item}</span>
+                <input type="text" value={this.props.item} />
+                <button type="button">
+                    Edit
+                </button> |
+                <button type="button">
+                    Remove
+                </button>
+            </li>
+        );
+    }
+}
+
 class Todolist extends Component {
     constructor(props) {
         super(props);
@@ -88,25 +105,7 @@ class Todolist extends Component {
                     </div>
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
-                            // Keys help React identify which items have changed, are added, or are removed.
-                            <li key={index}>
-                                <span className={"Todolist-item-" + index}>{item}</span>
-                                <input type="text"
-                                       className={"Todolist-edit-item-" + index}
-                                       value={item} hidden="hidden"
-                                       onChange={this.processItemEditOnChange.bind(this)}
-                                       onBlur={this.processItemEditOnBlur.bind(this, index)}
-                                       data-index={index} />
-                                <button type="button"
-                                        className={"Todolist-item-edit-btn-" + index}
-                                        onClick={this.processEdit.bind(this, index)}>
-                                    Edit
-                                </button> |
-                                <button type="button"
-                                        onClick={this.processRemove.bind(this, index)}>
-                                    Remove
-                                </button>
-                            </li>
+                            <TodolistItem item={item} />
                         ))}
                     </ul>
                 </div>
