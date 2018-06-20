@@ -6,7 +6,8 @@ class TodolistItem extends Component {
         super(props);
 
         this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
-        this.processItemEditBtn = this.processItemEditBtn.bind(this);
+        this.onItemEditBtnChange = this.onItemEditBtnChange.bind(this);
+        this.state = {isEdit: false}
     }
 
     processItemTextOnChange(e) {
@@ -14,16 +15,32 @@ class TodolistItem extends Component {
         this.props.onItemChange(e.target.value, this.props.itemIndex);
     }
 
-    processItemEditBtn() {
-        console.log("Edit");
+    onItemEditBtnChange() {
+        if (this.state.isEdit) {
+            this.setState({isEdit: false});
+        } else {
+            this.setState({isEdit: true});
+        }
     }
 
     render() {
+        let editItemField;
+        if (this.state.isEdit) {
+            editItemField = <input type="text"
+                                  defaultValue={this.props.item}
+                                  onChange={this.processItemTextOnChange} />;
+        } else {
+            editItemField = <input type="text"
+                                  hidden
+                                  defaultValue={this.props.item}
+                                  onChange={this.processItemTextOnChange} />;
+        }
+
         return (
             <li>
                 <span>{this.props.item}</span>
-                <input type="text" defaultValue={this.props.item} onChange={this.processItemTextOnChange} />
-                <button type="button" onClick={this.processItemEditBtn}>
+                {editItemField}
+                <button type="button" onClick={this.onItemEditBtnChange}>
                     Edit
                 </button> |
                 <button type="button">
