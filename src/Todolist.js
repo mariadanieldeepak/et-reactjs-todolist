@@ -70,7 +70,7 @@ class Todolist extends Component {
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
         this.processAddItem = this.processAddItem.bind(this);
-        this.processOnItemChange = this.processOnItemChange.bind(this);
+        this.handleOnItemChange = this.handleOnItemChange.bind(this);
         this.handleItemRemoveBtnClick = this.handleItemRemoveBtnClick.bind(this);
 
         this.state = {currentItem: "", items: []}
@@ -95,7 +95,7 @@ class Todolist extends Component {
         });
     }
 
-    processOnItemChange(updatedItem, index) {
+    handleOnItemChange(updatedItem, index) {
         let modifiedItems = this.state.items;
         modifiedItems[index] = updatedItem;
 
@@ -130,7 +130,7 @@ class Todolist extends Component {
                             <TodolistItem key={index}
                                           itemIndex={index}
                                           item={item}
-                                          onItemChange={this.processOnItemChange}
+                                          onItemChange={this.handleOnItemChange}
                                           onItemRemove={this.handleItemRemoveBtnClick} />
                         ))}
                     </ul>
