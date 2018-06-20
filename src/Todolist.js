@@ -36,6 +36,7 @@ class TodolistItem extends Component {
 
     onItemRemoveBtnClick() {
         // Remove an item.
+        this.props.onItemRemove(this.props.itemIndex);
     }
 
     render() {
@@ -70,6 +71,7 @@ class Todolist extends Component {
         this.processSubmit = this.processSubmit.bind(this);
         this.processAddItem = this.processAddItem.bind(this);
         this.processOnItemChange = this.processOnItemChange.bind(this);
+        this.handleItemRemoveBtnClick = this.handleItemRemoveBtnClick.bind(this);
 
         this.state = {currentItem: "", items: []}
     }
@@ -141,6 +143,13 @@ class Todolist extends Component {
         this.setState({items: modifiedItems});
     }
 
+    handleItemRemoveBtnClick(index) {
+        let updatedItems = this.state.items.filter((item, itemIndex) => itemIndex !== index);
+        this.setState({
+            items: updatedItems
+        })
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -159,7 +168,11 @@ class Todolist extends Component {
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
-                            <TodolistItem key={index} itemIndex={index} item={item} onItemChange={this.processOnItemChange} />
+                            <TodolistItem key={index}
+                                          itemIndex={index}
+                                          item={item}
+                                          onItemChange={this.processOnItemChange}
+                                          onItemRemove={this.handleItemRemoveBtnClick} />
                         ))}
                     </ul>
                 </div>
