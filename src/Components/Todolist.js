@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
-
-class Button extends Component {
-    render() {
-        return (
-            <button type="button" onClick={this.props.onClick}>
-                {this.props.label}
-            </button>
-        );
-    }
-}
+import Button from './Button';
 
 class TodolistItem extends Component {
     constructor(props) {
