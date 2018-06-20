@@ -2,12 +2,28 @@ import React, { Component } from 'react';
 import jQuery from 'jquery';
 
 class TodolistItem extends Component {
+    constructor(props) {
+        super(props);
+
+        this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
+        this.processItemEditBtn = this.processItemEditBtn.bind(this);
+    }
+
+    processItemTextOnChange(e) {
+        console.log(e.target.value);
+        this.props.onItemChange(e.target.value, this.props.itemIndex);
+    }
+
+    processItemEditBtn() {
+        console.log("Edit");
+    }
+
     render() {
         return (
             <li>
                 <span>{this.props.item}</span>
-                <input type="text" value={this.props.item} />
-                <button type="button">
+                <input type="text" defaultValue={this.props.item} onChange={this.processItemTextOnChange} />
+                <button type="button" onClick={this.processItemEditBtn}>
                     Edit
                 </button> |
                 <button type="button">
@@ -24,6 +40,7 @@ class Todolist extends Component {
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
         this.processAddItem = this.processAddItem.bind(this);
+        this.processOnItemChange = this.processOnItemChange.bind(this);
 
         this.state = {currentItem: "", items: []}
     }
@@ -88,6 +105,17 @@ class Todolist extends Component {
         jQuery('.Todolist-item-' + index).show();
     }
 
+    processOnItemChange(updatedItem, index) {
+
+        console.log("index: " + index);
+        console.log("item: " + updatedItem);
+
+        let modifiedItems = this.state.items;
+        modifiedItems[index] = updatedItem;
+
+        this.setState({items: modifiedItems});
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -105,7 +133,8 @@ class Todolist extends Component {
                     </div>
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
-                            <TodolistItem item={item} />
+                            // Key should be specified here and not in the TodolistItem component.
+                            <TodolistItem key={index} itemIndex={index} item={item} onItemChange={this.processOnItemChange} />
                         ))}
                     </ul>
                 </div>
