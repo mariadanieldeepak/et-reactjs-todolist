@@ -106,10 +106,6 @@ class Todolist extends Component {
     }
 
     processOnItemChange(updatedItem, index) {
-
-        console.log("index: " + index);
-        console.log("item: " + updatedItem);
-
         let modifiedItems = this.state.items;
         modifiedItems[index] = updatedItem;
 
