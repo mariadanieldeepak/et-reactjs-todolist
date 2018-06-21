@@ -2,6 +2,17 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+#### v0.2.0
+**Check-in status**  
+- Different components have been identified and split in to their own components and organized in to their own files
+- Refactored the code to avoid jQuery and let ReactJS control the `<input>` elements
+- Learnt how ReactJS uses `key` to manage lists - add/remove/edit
+- Learnt that `key` cannot be used in props, rather we can introduce props such as `itemIndex` to port key to the child components
+
+**Feedback:**   
+- Good understanding of `key` in ReactJS
+- Good understanding on defining class methods based on Component logic
+
 #### v0.1.0
 **Check-in status**  
 Initial working demo.  
