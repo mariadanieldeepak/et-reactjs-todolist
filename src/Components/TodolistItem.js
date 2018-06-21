@@ -49,9 +49,8 @@ class TodolistItem extends Component {
 
         return (
             <li>
-                {editItemField}
+                {editItemField} &nbsp;
                 <Button label="Edit" onClick={this.onItemEditBtnClick} />
-                |
                 <Button label="Remove" onClick={this.onItemRemoveBtnClick} />
             </li>
         );

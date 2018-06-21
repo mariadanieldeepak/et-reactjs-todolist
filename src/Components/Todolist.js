@@ -17,12 +17,13 @@ class Todolist extends Component {
         e.preventDefault();
 
         // Do not add empty tasks.
-        if (! this.state.items.length && ! this.state.currentItem) {
+        if (this.state.currentItem.trim() === '') {
             return;
         }
 
         this.setState((prevState, props) => ({
-            items: prevState.items.concat([this.state.currentItem])
+            items: prevState.items.concat([this.state.currentItem]),
+            currentItem: ""
         }));
     }
 
@@ -56,7 +57,7 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" type="text" onChange={this.processAddItem} />
+                            <input className="Todolist-add-item" value={this.state.currentItem} type="text" onChange={this.processAddItem} />
                             <button type="submit">Submit</button>
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}

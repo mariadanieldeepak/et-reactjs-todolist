@@ -16,8 +16,13 @@
 }
 
 .App-intro {
-    font-size: large;
+    /*font-size: large;*/
     padding: 20px;
+    font-family: "Lucida Console", Monaco, monospace;
+}
+
+.App-component-types {
+    padding-top: 20px;
 }
 
 @keyframes App-logo-spin {

@@ -2,6 +2,13 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+#### v0.3.0
+**Check-in status**  
+- Learnt about Controlled & un-controlled inputs
+- `<select>`, `<input>` & `<textarea>` can have `value` attribute to be controlled by React
+- `<input>` with type `file` is read-only and hence it is always un-controlled
+- Values from Uncontrolled input fields can be accessed using `ref` and these un-controlled fields can be used when introducing React on to legacy applications.
+
 #### v0.2.0
 **Check-in status**  
 - Different components have been identified and split in to their own components and organized in to their own files
@@ -9,7 +16,7 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - Learnt how ReactJS uses `key` to manage lists - add/remove/edit
 - Learnt that `key` cannot be used in props, rather we can introduce props such as `itemIndex` to port key to the child components
 
-**Feedback:**   
+**Feedback**   
 - Good understanding of `key` in ReactJS
 - Good understanding on defining class methods based on Component logic
 
@@ -17,6 +24,6 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 **Check-in status**  
 Initial working demo.  
 
-**Feedback:**   
+**Feedback**   
 - Split this into multiple react components, i.e. The "App", the list, a list item, the buttons, the new task form etc
 - Refactor to avoid all use of jQuery
