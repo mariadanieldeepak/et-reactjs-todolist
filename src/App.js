@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Todolist from './Components/Todolist';
+import ControlledInput from "./Components/ControlledInput";
+import UnControlledInput from "./Components/UnControlledInput";
+import ControlledSelect from "./Components/ControlledSelect";
 
 class App extends Component {
     render() {
@@ -14,9 +17,15 @@ class App extends Component {
                 <div className="App-intro">
                     <Todolist/>
                     <div className="App-component-types">
-                        Controlled vs Un-controlled components
-                        <br />
-                        Hello World.
+                        Controlled vs Un-controlled components.
+                        <form>
+                            <br />
+                            <ControlledInput />
+                            <br />
+                            <UnControlledInput />
+                            <br />
+                            <ControlledSelect />
+                        </form>
                     </div>
                 </div>
 
