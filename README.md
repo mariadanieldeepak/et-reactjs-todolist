@@ -9,6 +9,10 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - `<input>` with type `file` is read-only and hence it is always un-controlled
 - Values from Uncontrolled input fields can be accessed using `ref` and these un-controlled fields can be used when introducing React on to legacy applications.
 
+**Feedback**  
+- Show/hide elements just by using `this.state.isEdit`
+- Add a checkbox for task item being "complete" or not, and then add a filter to show: all/completed/un-completed todos.
+
 #### v0.2.0
 **Check-in status**  
 - Different components have been identified and split in to their own components and organized in to their own files
