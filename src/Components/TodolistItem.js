@@ -5,12 +5,12 @@ class TodolistItem extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {isEdit: false, isComplete:this.props.isComplete}
+
         this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
         this.onItemEditBtnClick = this.onItemEditBtnClick.bind(this);
         this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
         this.handleItemCompleteOnChange = this.handleItemCompleteOnChange.bind(this);
-
-        this.state = {isEdit: false, isComplete:this.props.isComplete}
     }
 
     processItemTextOnChange(e) {
