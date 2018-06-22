@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TodolistItem from './TodolistItem';
+import Button from "./Button";
 
 class Todolist extends Component {
     constructor(props) {
@@ -47,6 +48,18 @@ class Todolist extends Component {
         })
     }
 
+    handleShowAllItems() {
+
+    }
+
+    handleShowCompletedItems() {
+
+    }
+
+    handleShowIncompleteItems() {
+
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -62,6 +75,13 @@ class Todolist extends Component {
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
                     </div>
+                    <br />
+                    <a onClick={this.handleShowAllItems.bind(this)} href="#">All</a>
+                    |
+                    <a onClick={this.handleShowCompletedItems.bind(this)}>Completed</a>
+                    |
+                    <a onClick={this.handleShowIncompleteItems.bind(this)}>In-complete</a>
+                    <br />
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
