@@ -24,9 +24,12 @@ class Todolist extends Component {
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
 
-        this.state = {currentItem: {}, items: []}
+        this.state = {currentItem: {}, items: [], originalItems: []}
     }
 
+    /**
+     * Adds the current Item to the existing Items.
+     */
     processSubmit(e) {
         e.preventDefault();
 
@@ -37,10 +40,14 @@ class Todolist extends Component {
 
         this.setState((prevState, props) => ({
             items: prevState.items.concat([this.state.currentItem]),
-            currentItem: {}
+            currentItem: {},
+            originalItems: prevState.items.concat([this.state.currentItem]),
         }));
     }
 
+    /**
+     * Set the user input as Current Item.
+     */
     processAddItem(e) {
         let currentItem = new Todo();
         currentItem.description = e.target.value;
@@ -61,20 +68,31 @@ class Todolist extends Component {
     handleItemRemoveBtnClick(index) {
         let updatedItems = this.state.items.filter((item, itemIndex) => itemIndex !== index);
         this.setState({
-            items: updatedItems
+            items: updatedItems,
+            originalItems: updatedItems
         })
     }
 
     handleShowAllItems() {
-        return;
+        let updatedItems = this.state.originalItems;
+        console.log("Total: " + this.state.items.length);
+        this.setState({
+            items: updatedItems
+        });
     }
 
     handleShowCompletedItems() {
-
+        let updatedItems = this.state.items.filter((item, itemIndex) => item.isComplete);
+        this.setState({
+            items: updatedItems
+        });
     }
 
     handleShowIncompleteItems() {
-
+        let updatedItems = this.state.items.filter((item, itemIndex) => ! item.isComplete);
+        this.setState({
+            items: updatedItems
+        });
     }
 
     onItemCompleteChange(index, isChecked) {
@@ -100,9 +118,9 @@ class Todolist extends Component {
                     <br />
                     <a onClick={this.handleShowAllItems.bind(this)} href="#">All</a>
                     |
-                    <a onClick={this.handleShowCompletedItems.bind(this)}>Completed</a>
+                    <a onClick={this.handleShowCompletedItems.bind(this)} href="#">Completed</a>
                     |
-                    <a onClick={this.handleShowIncompleteItems.bind(this)}>In-complete</a>
+                    <a onClick={this.handleShowIncompleteItems.bind(this)} href="#">In-complete</a>
                     <br />
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
