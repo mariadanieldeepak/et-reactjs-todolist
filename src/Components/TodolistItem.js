@@ -30,26 +30,18 @@ class TodolistItem extends Component {
     }
 
     render() {
-        let editItemField;
-        if (this.state.isEdit) {
-            editItemField = <span>
-                                <input type="text"
-                                       value={this.props.item}
-                                       onChange={this.processItemTextOnChange} />
-                            </span>;
-        } else {
-            editItemField = <span>
-                                <span>{this.props.item}</span>
-                                <input type="text"
-                                       hidden
-                                       value={this.props.item}
-                                       onChange={this.processItemTextOnChange} />
-                            </span>;
-        }
+        let editItemFieldDisplay = this.state.isEdit ? "inline": "none";
+        let itemLabelFieldDisplay = this.state.isEdit ? "none": "inline";
 
         return (
             <li>
-                {editItemField} &nbsp;
+                <span>
+                    <span style={{display: itemLabelFieldDisplay}}>{this.props.item}</span>
+                    <input type="text"
+                           style={{"display": editItemFieldDisplay}}
+                           value={this.props.item}
+                           onChange={this.processItemTextOnChange} />
+                </span> &nbsp;
                 <Button label="Edit" onClick={this.onItemEditBtnClick} />
                 <Button label="Remove" onClick={this.onItemRemoveBtnClick} />
             </li>
