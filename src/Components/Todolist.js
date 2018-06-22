@@ -4,17 +4,22 @@ import Button from "./Button";
 
 class Todo {
     constructor() {
+        this.id;
         this.description = "";
         this.isComplete = false;
     }
 }
 
+var id = 0;
+
 class Todolist extends Component {
     constructor(props) {
         super(props);
+
+        this.onAddItemInputChange = this.onAddItemInputChange.bind(this);
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
-        this.processAddItem = this.processAddItem.bind(this);
+
         this.handleOnItemChange = this.handleOnItemChange.bind(this);
         this.handleItemRemoveBtnClick = this.handleItemRemoveBtnClick.bind(this);
 
@@ -24,7 +29,20 @@ class Todolist extends Component {
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
 
-        this.state = {currentItem: {}, items: [], originalItems: []}
+        this.state = {currentItem: {}, items: []}
+    }
+
+    /**
+     * Sets the user input as Current Item.
+     */
+    onAddItemInputChange(e) {
+        let currentItem = new Todo();
+        currentItem.description = e.target.value;
+
+        // Assignment uses ES6 shorthand notation.
+        this.setState({
+            currentItem
+        });
     }
 
     /**
@@ -38,24 +56,13 @@ class Todolist extends Component {
             return;
         }
 
+        let currentItem = this.state.currentItem;
+        currentItem.id = ++id;
+
         this.setState((prevState, props) => ({
-            items: prevState.items.concat([this.state.currentItem]),
+            items: prevState.items.concat([currentItem]),
             currentItem: {},
-            originalItems: prevState.items.concat([this.state.currentItem]),
         }));
-    }
-
-    /**
-     * Set the user input as Current Item.
-     */
-    processAddItem(e) {
-        let currentItem = new Todo();
-        currentItem.description = e.target.value;
-
-        // Assignment uses ES6 shorthand notation.
-        this.setState({
-            currentItem
-        });
     }
 
     handleOnItemChange(updatedItem, index) {
@@ -110,7 +117,7 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" value={this.state.currentItem.description} type="text" onChange={this.processAddItem} />
+                            <input className="Todolist-add-item" value={this.state.currentItem.description} type="text" onChange={this.onAddItemInputChange} />
                             <button type="submit">Submit</button>
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
@@ -125,8 +132,8 @@ class Todolist extends Component {
                     <ul className="Todolist-items">
                         {this.state.items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
-                            <TodolistItem key={index}
-                                          itemIndex={index}
+                            <TodolistItem key={item.id}
+                                          itemIndex={item.id}
                                           item={item.description}
                                           isComplete={item.isComplete}
                                           onItemChange={this.handleOnItemChange}
