@@ -2,7 +2,7 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
-#### v0.3.0
+#### v0.3.0 (21 Jun 2018)
 **Check-in status**  
 - Learnt about Controlled & un-controlled inputs
 - `<select>`, `<input>` & `<textarea>` can have `value` attribute to be controlled by React
@@ -13,7 +13,7 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - Show/hide elements just by using `this.state.isEdit`
 - Add a checkbox for task item being "complete" or not, and then add a filter to show: all/completed/un-completed todos.
 
-#### v0.2.0
+#### v0.2.0 (20 Jun 2018)
 **Check-in status**  
 - Different components have been identified and split in to their own components and organized in to their own files
 - Refactored the code to avoid jQuery and let ReactJS control the `<input>` elements
@@ -24,7 +24,7 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - Good understanding of `key` in ReactJS
 - Good understanding on defining class methods based on Component logic
 
-#### v0.1.0
+#### v0.1.0 (19 Jun 2018)
 **Check-in status**  
 Initial working demo.  
 
