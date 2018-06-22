@@ -5,17 +5,22 @@ class TodolistItem extends Component {
     constructor(props) {
         super(props);
 
-        this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
+        this.state = {isEdit: false, isComplete:this.props.isComplete}
+
         this.onItemEditBtnClick = this.onItemEditBtnClick.bind(this);
+        this.onItemDescriptionChange = this.onItemDescriptionChange.bind(this);
+
         this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
-        this.state = {isEdit: false}
+        this.handleItemCompleteOnChange = this.handleItemCompleteOnChange.bind(this);
     }
 
-    processItemTextOnChange(e) {
-        console.log(e.target.value);
-        this.props.onItemChange(e.target.value, this.props.itemIndex);
+    onItemDescriptionChange(e) {
+        this.props.onItemDescriptionChange(e.target.value, this.props.itemId);
     }
 
+    /**
+     * Toggles the Edit Input on Item.
+     */
     onItemEditBtnClick() {
         if (this.state.isEdit) {
             this.setState({isEdit: false});
@@ -26,30 +31,33 @@ class TodolistItem extends Component {
 
     onItemRemoveBtnClick() {
         // Remove an item.
-        this.props.onItemRemove(this.props.itemIndex);
+        this.props.onItemRemoveBtnClick(this.props.itemId);
+    }
+
+    /**
+     * Executes when an item is checked on/off.
+     */
+    handleItemCompleteOnChange(e) {
+        this.props.onItemCompleteChange(this.props.itemId, e.target.checked);
     }
 
     render() {
-        let editItemField;
-        if (this.state.isEdit) {
-            editItemField = <span>
-                                <input type="text"
-                                       value={this.props.item}
-                                       onChange={this.processItemTextOnChange} />
-                            </span>;
-        } else {
-            editItemField = <span>
-                                <span>{this.props.item}</span>
-                                <input type="text"
-                                       hidden
-                                       value={this.props.item}
-                                       onChange={this.processItemTextOnChange} />
-                            </span>;
-        }
+        let editItemFieldDisplay = this.state.isEdit ? "inline": "none";
+        let itemLabelFieldDisplay = this.state.isEdit ? "none": "inline";
 
         return (
-            <li>
-                {editItemField} &nbsp;
+            <li data-itemIndex={this.props.itemIndex}>
+                <span><input type="checkbox"
+                             defaultChecked={this.props.isComplete ? true: false}
+                             onChange={this.handleItemCompleteOnChange} /></span>
+                &nbsp;
+                <span>
+                    <span style={{display: itemLabelFieldDisplay}}>{this.props.item}</span>
+                    <input type="text"
+                           style={{"display": editItemFieldDisplay}}
+                           value={this.props.item}
+                           onChange={this.onItemDescriptionChange} />
+                </span> &nbsp;
                 <Button label="Edit" onClick={this.onItemEditBtnClick} />
                 <Button label="Remove" onClick={this.onItemRemoveBtnClick} />
             </li>
