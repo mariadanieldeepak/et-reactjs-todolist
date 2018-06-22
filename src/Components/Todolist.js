@@ -29,7 +29,7 @@ class Todolist extends Component {
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
 
-        this.state = {currentItem: {}, items: []}
+        this.state = {currentItem: {}, items: [], filter: 'all'}
     }
 
     /**
@@ -94,35 +94,51 @@ class Todolist extends Component {
     }
 
     handleShowAllItems() {
-        let updatedItems = this.state.originalItems;
+        let updatedItems = this.state.items;
         console.log("Total: " + this.state.items.length);
         this.setState({
-            items: updatedItems
+            items: updatedItems,
+            displayItems: null
         });
     }
 
     handleShowCompletedItems() {
-        let updatedItems = this.state.items.filter((item, itemIndex) => item.isComplete);
+        let completedItems = this.state.items.filter((item, itemIndex) => {if (item.isComplete) {return item}});
+        console.log(completedItems);
         this.setState({
-            items: updatedItems
+            displayItems: completedItems
         });
     }
 
     handleShowIncompleteItems() {
-        let updatedItems = this.state.items.filter((item, itemIndex) => ! item.isComplete);
+        let completedItems = this.state.items.filter((item, itemIndex) => {if (! item.isComplete) {return item}});
+        console.log(completedItems);
         this.setState({
-            items: updatedItems
+            displayItems: completedItems
         });
     }
 
-    onItemCompleteChange(index, isChecked) {
-        let modifiedItems = this.state.items;
-        modifiedItems[index].isComplete = isChecked;
+    onItemCompleteChange(id, isComplete) {
+        let itemIndex,
+            todoListItems = [];
+
+        this.state.items.forEach((item, index, items) => {
+            if (item.id === id) {
+                todoListItems = items;
+                itemIndex = index;
+            }
+        });
+
+        todoListItems[itemIndex].isComplete = isComplete;
+        this.setState({items: todoListItems});
     }
 
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
+
+        let items = (this.state.displayItems === null) ? this.state.items : this.state.displayItems;
+
         return (
             // Return must contain only one parent element.
             <div className="Todolist">
@@ -143,7 +159,7 @@ class Todolist extends Component {
                     <a onClick={this.handleShowIncompleteItems.bind(this)} href="#">In-complete</a>
                     <br />
                     <ul className="Todolist-items">
-                        {this.state.items.map((item, index) => (
+                        {items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
                             <TodolistItem key={item.id}
                                           itemId={item.id}

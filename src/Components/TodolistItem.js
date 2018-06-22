@@ -34,10 +34,11 @@ class TodolistItem extends Component {
         this.props.onItemRemoveBtnClick(this.props.itemId);
     }
 
+    /**
+     * Executes when an item is checked on/off.
+     */
     handleItemCompleteOnChange(e) {
-        let itemIndex = this.props.itemIndex,
-            isChecked = e.target.checked;
-        this.props.onItemCompleteChange(itemIndex, isChecked);
+        this.props.onItemCompleteChange(this.props.itemId, e.target.checked);
     }
 
     render() {
