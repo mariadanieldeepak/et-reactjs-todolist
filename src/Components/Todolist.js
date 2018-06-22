@@ -20,8 +20,8 @@ class Todolist extends Component {
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
 
-        this.handleOnItemChange = this.handleOnItemChange.bind(this);
-        this.handleItemRemoveBtnClick = this.handleItemRemoveBtnClick.bind(this);
+        this.onItemDescriptionChange = this.onItemDescriptionChange.bind(this);
+        this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
 
         this.handleShowAllItems = this.handleShowAllItems.bind(this);
         this.handleShowCompletedItems = this.handleShowCompletedItems.bind(this);
@@ -65,18 +65,31 @@ class Todolist extends Component {
         }));
     }
 
-    handleOnItemChange(updatedItem, index) {
-        let modifiedItems = this.state.items;
-        modifiedItems[index].description = updatedItem;
+    /**
+     * Updates the item description on Edit.
+     */
+    onItemDescriptionChange(description, id) {
+        let itemIndex,
+            todoListItems = [];
 
-        this.setState({items: modifiedItems});
+        this.state.items.forEach((item, index, items) => {
+           if (item.id === id) {
+               todoListItems = items;
+               itemIndex = index;
+           }
+        });
+
+        todoListItems[itemIndex].description = description;
+        this.setState({items: todoListItems});
     }
 
-    handleItemRemoveBtnClick(index) {
-        let updatedItems = this.state.items.filter((item, itemIndex) => itemIndex !== index);
+    /**
+     * Removes the Item by Item Id.
+     */
+    onItemRemoveBtnClick(itemId) {
+        let updatedItems = this.state.items.filter((item, itemIndex) => item.id !== itemId);
         this.setState({
-            items: updatedItems,
-            originalItems: updatedItems
+            items: updatedItems
         })
     }
 
@@ -133,11 +146,11 @@ class Todolist extends Component {
                         {this.state.items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
                             <TodolistItem key={item.id}
-                                          itemIndex={item.id}
+                                          itemId={item.id}
                                           item={item.description}
                                           isComplete={item.isComplete}
-                                          onItemChange={this.handleOnItemChange}
-                                          onItemRemove={this.handleItemRemoveBtnClick}
+                                          onItemDescriptionChange={this.onItemDescriptionChange}
+                                          onItemRemoveBtnClick={this.onItemRemoveBtnClick}
                                           onShowAllItems={this.handleShowAllItems}
                                           onShowCompletedItems={this.handleShowCompletedItems}
                                           onShowIncompleteItems={this.handleShowIncompleteItems}

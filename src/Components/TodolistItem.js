@@ -7,16 +7,20 @@ class TodolistItem extends Component {
 
         this.state = {isEdit: false, isComplete:this.props.isComplete}
 
-        this.processItemTextOnChange = this.processItemTextOnChange.bind(this);
         this.onItemEditBtnClick = this.onItemEditBtnClick.bind(this);
+        this.onItemDescriptionChange = this.onItemDescriptionChange.bind(this);
+
         this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
         this.handleItemCompleteOnChange = this.handleItemCompleteOnChange.bind(this);
     }
 
-    processItemTextOnChange(e) {
-        this.props.onItemChange(e.target.value, this.props.itemIndex);
+    onItemDescriptionChange(e) {
+        this.props.onItemDescriptionChange(e.target.value, this.props.itemId);
     }
 
+    /**
+     * Toggles the Edit Input on Item.
+     */
     onItemEditBtnClick() {
         if (this.state.isEdit) {
             this.setState({isEdit: false});
@@ -27,7 +31,7 @@ class TodolistItem extends Component {
 
     onItemRemoveBtnClick() {
         // Remove an item.
-        this.props.onItemRemove(this.props.itemIndex);
+        this.props.onItemRemoveBtnClick(this.props.itemId);
     }
 
     handleItemCompleteOnChange(e) {
@@ -51,7 +55,7 @@ class TodolistItem extends Component {
                     <input type="text"
                            style={{"display": editItemFieldDisplay}}
                            value={this.props.item}
-                           onChange={this.processItemTextOnChange} />
+                           onChange={this.onItemDescriptionChange} />
                 </span> &nbsp;
                 <Button label="Edit" onClick={this.onItemEditBtnClick} />
                 <Button label="Remove" onClick={this.onItemRemoveBtnClick} />
