@@ -133,11 +133,23 @@ class Todolist extends Component {
         this.setState({items: todoListItems});
     }
 
+    onFilterChange(e) {
+        this.setState({filter: e.target.value});
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
 
-        let items = (this.state.displayItems === null) ? this.state.items : this.state.displayItems;
+        let items = this.state.items.filter(item => {
+            if (this.state.filter === 'all') {
+                return item;
+            } else if (this.state.filter === 'complete' && item.isComplete) {
+                return item;
+            } else if (this.state.filter === 'incomplete' && ! item.isComplete) {
+                return item;
+            }
+        });
 
         return (
             // Return must contain only one parent element.
@@ -152,12 +164,11 @@ class Todolist extends Component {
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
                     </div>
                     <br />
-                    <a onClick={this.handleShowAllItems.bind(this)} href="#">All</a>
-                    |
-                    <a onClick={this.handleShowCompletedItems.bind(this)} href="#">Completed</a>
-                    |
-                    <a onClick={this.handleShowIncompleteItems.bind(this)} href="#">In-complete</a>
-                    <br />
+                    <select value={this.state.filter} onChange={this.onFilterChange.bind(this)}>
+                        <option value='all'>All</option>
+                        <option value='complete'>Completed</option>
+                        <option value='incomplete'>In Complete</option>
+                    </select>
                     <ul className="Todolist-items">
                         {items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
