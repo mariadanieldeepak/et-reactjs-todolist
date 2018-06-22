@@ -115,7 +115,8 @@ class Todolist extends Component {
                                           onItemRemove={this.handleItemRemoveBtnClick}
                                           onShowAllItems={this.handleShowAllItems}
                                           onShowCompletedItems={this.handleShowCompletedItems}
-                                          onShowIncompleteItems={this.handleShowIncompleteItems} onItemCompleteChange={this.onItemCompleteChange} />
+                                          onShowIncompleteItems={this.handleShowIncompleteItems}
+                                          onItemCompleteChange={this.onItemCompleteChange} />
                         ))}
                     </ul>
                 </div>
