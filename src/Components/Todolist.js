@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import TodolistItem from './TodolistItem';
 import Button from "./Button";
 
+class Todo {
+    constructor() {
+        this.description = "";
+        this.isComplete = false;
+    }
+}
+
 class Todolist extends Component {
     constructor(props) {
         super(props);
@@ -11,32 +18,42 @@ class Todolist extends Component {
         this.handleOnItemChange = this.handleOnItemChange.bind(this);
         this.handleItemRemoveBtnClick = this.handleItemRemoveBtnClick.bind(this);
 
-        this.state = {currentItem: "", items: []}
+        this.handleShowAllItems = this.handleShowAllItems.bind(this);
+        this.handleShowCompletedItems = this.handleShowCompletedItems.bind(this);
+        this.handleShowIncompleteItems = this.handleShowIncompleteItems.bind(this);
+
+        this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
+
+        this.state = {currentItem: {}, items: []}
     }
 
     processSubmit(e) {
         e.preventDefault();
 
         // Do not add empty tasks.
-        if (this.state.currentItem.trim() === '') {
+        if (this.state.currentItem.description.trim() === '') {
             return;
         }
 
         this.setState((prevState, props) => ({
             items: prevState.items.concat([this.state.currentItem]),
-            currentItem: ""
+            currentItem: {}
         }));
     }
 
     processAddItem(e) {
+        let currentItem = new Todo();
+        currentItem.description = e.target.value;
+
+        // Assignment uses ES6 shorthand notation.
         this.setState({
-            currentItem: e.target.value
+            currentItem
         });
     }
 
     handleOnItemChange(updatedItem, index) {
         let modifiedItems = this.state.items;
-        modifiedItems[index] = updatedItem;
+        modifiedItems[index].description = updatedItem;
 
         this.setState({items: modifiedItems});
     }
@@ -49,7 +66,7 @@ class Todolist extends Component {
     }
 
     handleShowAllItems() {
-
+        return;
     }
 
     handleShowCompletedItems() {
@@ -58,6 +75,11 @@ class Todolist extends Component {
 
     handleShowIncompleteItems() {
 
+    }
+
+    onItemCompleteChange(index, isChecked) {
+        let modifiedItems = this.state.items;
+        modifiedItems[index].isComplete = isChecked;
     }
 
     // Every Component must render()
@@ -70,7 +92,7 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" value={this.state.currentItem} type="text" onChange={this.processAddItem} />
+                            <input className="Todolist-add-item" value={this.state.currentItem.description} type="text" onChange={this.processAddItem} />
                             <button type="submit">Submit</button>
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
@@ -87,9 +109,13 @@ class Todolist extends Component {
                             // Key should be specified here and not in the TodolistItem component.
                             <TodolistItem key={index}
                                           itemIndex={index}
-                                          item={item}
+                                          item={item.description}
+                                          isComplete={item.isComplete}
                                           onItemChange={this.handleOnItemChange}
-                                          onItemRemove={this.handleItemRemoveBtnClick} />
+                                          onItemRemove={this.handleItemRemoveBtnClick}
+                                          onShowAllItems={this.handleShowAllItems}
+                                          onShowCompletedItems={this.handleShowCompletedItems}
+                                          onShowIncompleteItems={this.handleShowIncompleteItems} onItemCompleteChange={this.onItemCompleteChange} />
                         ))}
                     </ul>
                 </div>

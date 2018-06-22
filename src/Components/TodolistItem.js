@@ -9,11 +9,11 @@ class TodolistItem extends Component {
         this.onItemEditBtnClick = this.onItemEditBtnClick.bind(this);
         this.onItemRemoveBtnClick = this.onItemRemoveBtnClick.bind(this);
         this.handleItemCompleteOnChange = this.handleItemCompleteOnChange.bind(this);
-        this.state = {isEdit: false, isComplete: true}
+
+        this.state = {isEdit: false, isComplete:this.props.isComplete}
     }
 
     processItemTextOnChange(e) {
-        console.log(e.target.value);
         this.props.onItemChange(e.target.value, this.props.itemIndex);
     }
 
@@ -31,7 +31,9 @@ class TodolistItem extends Component {
     }
 
     handleItemCompleteOnChange(e) {
-        this.setState({isComplete: e.target.checked});
+        let itemIndex = this.props.itemIndex,
+            isChecked = e.target.checked;
+        this.props.onItemCompleteChange(itemIndex, isChecked);
     }
 
     render() {
@@ -41,7 +43,7 @@ class TodolistItem extends Component {
         return (
             <li>
                 <span><input type="checkbox"
-                             checked={this.state.isComplete ? true: false}
+                             defaultChecked={this.props.isComplete ? true: false}
                              onChange={this.handleItemCompleteOnChange} /></span>
                 &nbsp;
                 <span>
