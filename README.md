@@ -2,12 +2,21 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+### v0.5.0 (25 June 2018)
+**Check-in status**  
+- Filtering logic has been unified
+- Identified the reason for link filters not working as expected: Tried to use cloned state objects rather than let React use State directly
+- Link filters made to work
+
+**Feedback**  
+
+
 ### v0.4.0 (22 June 2018)
 **Check-in status**  
 - Added checkbox for checking on/off the tasks
 - Added filter to show all/completed/un-completed todos.
     - Approached two different methods: 1) Link filter 2) Dropdown filter
-    - Link filter didn't work as expected so switched to Dropdown (refer attached screencasts)
+    - [Link filter](https://github.com/mariadanieldeepak/et-reactjs-todolist/releases/tag/0.4.0-alpha.1) didn't work as expected so switched to Dropdown (refer attached screencasts)
 
 **Feedback**  
 - Appreciated for finding a real world scenario

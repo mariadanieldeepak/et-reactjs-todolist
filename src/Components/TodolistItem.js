@@ -46,7 +46,7 @@ class TodolistItem extends Component {
         let itemLabelFieldDisplay = this.state.isEdit ? "none": "inline";
 
         return (
-            <li data-itemIndex={this.props.itemIndex}>
+            <li data-itemindex={this.props.itemIndex}>
                 <span><input type="checkbox"
                              defaultChecked={this.props.isComplete ? true: false}
                              onChange={this.handleItemCompleteOnChange} /></span>
