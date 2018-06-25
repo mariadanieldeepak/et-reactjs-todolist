@@ -2,6 +2,15 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+### v0.5.0 (25 June 2018)
+**Check-in status**  
+- Filtering logic has been unified
+- Identified the reason for link filters not working as expected: Tried to use cloned state objects rather than let React use State directly
+- Link filters made to work
+
+**Feedback**  
+
+
 ### v0.4.0 (22 June 2018)
 **Check-in status**  
 - Added checkbox for checking on/off the tasks
