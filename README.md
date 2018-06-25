@@ -2,6 +2,18 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+### v0.4.0 (22 June 2018)
+**Check-in status**  
+- Added checkbox for checking on/off the tasks
+- Added filter to show all/completed/un-completed todos.
+    - Approached two different methods: 1) Link filter 2) Dropdown filter
+    - Link filter didn't work as expected so switched to Dropdown (refer attached screencasts)
+
+**Feedback**  
+- Appreciated for finding a real world scenario
+- Re-use the logic used in active state filter
+- Fix the link filters
+
 #### v0.3.0 (21 Jun 2018)
 **Check-in status**  
 - Learnt about Controlled & un-controlled inputs
