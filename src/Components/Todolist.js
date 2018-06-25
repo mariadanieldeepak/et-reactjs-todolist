@@ -16,6 +16,8 @@ class Todolist extends Component {
     constructor(props) {
         super(props);
 
+        this.addItemItemInput = React.createRef();
+
         this.onAddItemInputChange = this.onAddItemInputChange.bind(this);
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
@@ -29,7 +31,16 @@ class Todolist extends Component {
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
 
-        this.state = {currentItem: {}, items: [], filter: 'all'}
+        this.state = {
+            currentItem: new Todo(),
+            items: [],
+            filter: [
+                {label: "All", value: "all", selected: true},
+                {label: "Completed", value: "complete", selected: false},
+                {label: "In-complete", value: "incomplete", selected: false},
+            ],
+            selectedFilter: "all"
+        }
     }
 
     /**
@@ -39,10 +50,10 @@ class Todolist extends Component {
         let currentItem = new Todo();
         currentItem.description = e.target.value;
 
+        console.log(currentItem);
+
         // Assignment uses ES6 shorthand notation.
-        this.setState({
-            currentItem
-        });
+        this.setState({currentItem: currentItem});
     }
 
     /**
@@ -51,18 +62,24 @@ class Todolist extends Component {
     processSubmit(e) {
         e.preventDefault();
 
+        let currentItemDescription = this.addItemItemInput.current.value || '',
+            currentItem = new Todo();
+
         // Do not add empty tasks.
-        if (this.state.currentItem.description.trim() === '') {
+        if (currentItemDescription.trim() === '') {
             return;
         }
 
-        let currentItem = this.state.currentItem;
         currentItem.id = ++id;
+        currentItem.description = currentItemDescription;
 
-        this.setState((prevState, props) => ({
-            items: prevState.items.concat([currentItem]),
-            currentItem: {},
-        }));
+        this.setState((prevState, props) => {
+            return {items: prevState.items.concat([currentItem])};
+        });
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        // console.log("Test: " + prevState.items);
     }
 
     /**
@@ -133,8 +150,27 @@ class Todolist extends Component {
         this.setState({items: todoListItems});
     }
 
-    onFilterChange(e) {
-        this.setState({filter: e.target.value});
+    onFilterMenuClick(value) {
+        let resetFilter = this.state.filter;
+
+        resetFilter.forEach((item, index, array) => {
+            if (array[index].value.trim() === value.trim()) {
+                array[index].selected = true;
+            } else {
+                array[index].selected = false;
+            }
+        });
+
+        this.setState({filter: resetFilter});
+
+    }
+
+    getSelectedFilter() {
+        for(let filter of this.state.filter) {
+            if (filter.selected) {
+                return filter.value;
+            }
+        }
     }
 
     // Every Component must render()
@@ -142,11 +178,11 @@ class Todolist extends Component {
         // Render() must return something or should return `null`;
 
         let items = this.state.items.filter(item => {
-            if (this.state.filter === 'all') {
+            if (this.getSelectedFilter() === 'all') {
                 return item;
-            } else if (this.state.filter === 'complete' && item.isComplete) {
+            } else if (this.getSelectedFilter() === 'complete' && item.isComplete) {
                 return item;
-            } else if (this.state.filter === 'incomplete' && ! item.isComplete) {
+            } else if (this.getSelectedFilter() === 'incomplete' && ! item.isComplete) {
                 return item;
             }
         });
@@ -158,17 +194,16 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" value={this.state.currentItem.description} type="text" onChange={this.onAddItemInputChange} />
+                            <input className="Todolist-add-item" defaultValue={this.state.currentItem.description} type="text" ref={this.addItemItemInput} />
                             <button type="submit">Submit</button>
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
                     </div>
                     <br />
-                    <select value={this.state.filter} onChange={this.onFilterChange.bind(this)}>
-                        <option value='all'>All</option>
-                        <option value='complete'>Completed</option>
-                        <option value='incomplete'>In Complete</option>
-                    </select>
+                    {this.state.filter.map((item, index, array) => (
+                        <span><a href="#" onClick={this.onFilterMenuClick.bind(this, item.value)}>{item.label}</a>&nbsp;</span>
+                    ))}
+
                     <ul className="Todolist-items">
                         {items.map((item, index) => (
                             // Key should be specified here and not in the TodolistItem component.
