@@ -7,7 +7,7 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - Added checkbox for checking on/off the tasks
 - Added filter to show all/completed/un-completed todos.
     - Approached two different methods: 1) Link filter 2) Dropdown filter
-    - Link filter didn't work as expected so switched to Dropdown (refer attached screencasts)
+    - [Link filter](https://github.com/mariadanieldeepak/et-reactjs-todolist/releases/tag/0.4.0-alpha.1) didn't work as expected so switched to Dropdown (refer attached screencasts)
 
 **Feedback**  
 - Appreciated for finding a real world scenario
