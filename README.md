@@ -2,6 +2,11 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+### v0.5.1 (26 June 2018)
+**Check-in status**  
+- Used ES6 shorthand assignment
+- Used ES6 arrow function
+
 ### v0.5.0 (25 June 2018)
 **Check-in status**  
 - Filtering logic has been unified
