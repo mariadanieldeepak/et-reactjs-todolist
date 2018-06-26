@@ -128,7 +128,7 @@ class Todolist extends Component {
     }
 
     handleShowIncompleteItems() {
-        let completedItems = this.state.items.filter((item, itemIndex) => {if (! item.isComplete) {return item}});
+        let completedItems = this.state.items.filter((item, itemIndex) => ! item.isComplete ? item : false );
         console.log(completedItems);
         this.setState({
             displayItems: completedItems
