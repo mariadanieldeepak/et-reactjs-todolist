@@ -53,7 +53,7 @@ class Todolist extends Component {
         console.log(currentItem);
 
         // Assignment uses ES6 shorthand notation.
-        this.setState({currentItem: currentItem});
+        this.setState({currentItem});
     }
 
     /**
