@@ -9,7 +9,9 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 - Link filters made to work
 
 **Feedback**  
-
+- Use ES6 shorthand assignment - `this.setState({currentItem});`
+- Use ES6 arrow function - `let completedItems = this.state.items.filter((item, itemIndex) => ! item.isComplete ? item : false );`
+- Refactor the app using Flux architecture
 
 ### v0.4.0 (22 June 2018)
 **Check-in status**  
