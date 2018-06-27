@@ -88,28 +88,17 @@ class Todolist extends Component {
      * Updates the item description on Edit.
      */
     onItemDescriptionChange(description, id) {
-        let itemIndex,
-            todoListItems = [];
-
-        this.state.items.forEach((item, index, items) => {
-           if (item.id === id) {
-               todoListItems = items;
-               itemIndex = index;
-           }
-        });
-
-        todoListItems[itemIndex].description = description;
-        this.setState({items: todoListItems});
+        TodolistAction.editTodoById(id, description);
     }
 
     /**
      * Removes the Item by Item Id.
      */
     onItemRemoveBtnClick(itemId) {
-        let updatedItems = this.state.items.filter((item, itemIndex) => item.id !== itemId);
+        TodolistAction.deleteTodoById(itemId);
         this.setState({
-            items: updatedItems
-        })
+            items: TodolistStore.getAllItems()
+        });
     }
 
     handleShowAllItems() {

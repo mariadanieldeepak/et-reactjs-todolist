@@ -20,12 +20,29 @@ class TodolistStore extends EventEmitter {
             case ActionTypes.ADD_NEW_TODO:
                 this._addNewTodo(action.payload);
                 break;
+            case ActionTypes.EDIT_TODO_BY_ID:
+                this._editTodoById(action.id, action.description);
+                break;
+            case ActionTypes.DELETE_TODO_BY_ID:
+                this._deleteTodoById(action.id);
+                break;
         }
     }
 
     // Adds a new item to the list and emits a CHANGED event.
     _addNewTodo(item) {
         _todolistState.push(item);
+        this.emit(CHANGE);
+    }
+
+    _editTodoById(id, description) {
+        let index = _todolistState.findIndex((item) => item.id === id);
+        _todolistState[index].description = description;
+        this.emit(CHANGE);
+    }
+
+    _deleteTodoById(id) {
+        _todolistState = _todolistState.filter(item => item.id !== id);
         this.emit(CHANGE);
     }
 
