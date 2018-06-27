@@ -1,14 +1,7 @@
 import React, { Component } from 'react';
 import TodolistItem from './TodolistItem';
-import Button from "./Button";
-
-class Todo {
-    constructor() {
-        this.id;
-        this.description = "";
-        this.isComplete = false;
-    }
-}
+import TodolistAction from '../actions/TodolistActions';
+import TodolistStore from "../stores/TodolistStore";
 
 var id = 0;
 
@@ -16,9 +9,8 @@ class Todolist extends Component {
     constructor(props) {
         super(props);
 
-        this.addItemItemInput = React.createRef();
-
         this.onAddItemInputChange = this.onAddItemInputChange.bind(this);
+
         // Bind `this` to bind processSubmit to bind to the context of Todolist.
         this.processSubmit = this.processSubmit.bind(this);
 
@@ -31,8 +23,10 @@ class Todolist extends Component {
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
 
+        this._onChange = this._onChange.bind(this);
+
         this.state = {
-            currentItem: new Todo(),
+            currentItem: this._getNewTodo(),
             items: [],
             filter: [
                 {label: "All", value: "all", selected: true},
@@ -44,15 +38,20 @@ class Todolist extends Component {
     }
 
     /**
-     * Sets the user input as Current Item.
+     * Gets a new Todo.
      */
+    _getNewTodo() {
+        return {
+            id: 0,
+            description: "",
+            isComplete: false
+        }
+    }
+
     onAddItemInputChange(e) {
-        let currentItem = new Todo();
+        let currentItem = this._getNewTodo();
         currentItem.description = e.target.value;
 
-        console.log(currentItem);
-
-        // Assignment uses ES6 shorthand notation.
         this.setState({currentItem});
     }
 
@@ -62,20 +61,23 @@ class Todolist extends Component {
     processSubmit(e) {
         e.preventDefault();
 
-        let currentItemDescription = this.addItemItemInput.current.value || '',
-            currentItem = new Todo();
+        let currentItem = this.state.currentItem || this._getNewTodo();
 
         // Do not add empty tasks.
-        if (currentItemDescription.trim() === '') {
+        if (currentItem.description.trim() === '') {
             return;
         }
 
         currentItem.id = ++id;
-        currentItem.description = currentItemDescription;
 
-        this.setState((prevState, props) => {
-            return {items: prevState.items.concat([currentItem])};
-        });
+        TodolistAction.addNewTodo(currentItem);
+
+        /*
+        this.setState((prevState, props) => ({
+            items: prevState.items.concat([currentItem])
+        }));
+        */
+        this.setState({currentItem: this._getNewTodo()});
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -86,28 +88,17 @@ class Todolist extends Component {
      * Updates the item description on Edit.
      */
     onItemDescriptionChange(description, id) {
-        let itemIndex,
-            todoListItems = [];
-
-        this.state.items.forEach((item, index, items) => {
-           if (item.id === id) {
-               todoListItems = items;
-               itemIndex = index;
-           }
-        });
-
-        todoListItems[itemIndex].description = description;
-        this.setState({items: todoListItems});
+        TodolistAction.editTodoById(id, description);
     }
 
     /**
      * Removes the Item by Item Id.
      */
     onItemRemoveBtnClick(itemId) {
-        let updatedItems = this.state.items.filter((item, itemIndex) => item.id !== itemId);
+        TodolistAction.deleteTodoById(itemId);
         this.setState({
-            items: updatedItems
-        })
+            items: TodolistStore.getAllItems()
+        });
     }
 
     handleShowAllItems() {
@@ -173,6 +164,18 @@ class Todolist extends Component {
         }
     }
 
+    _onChange() {
+        this.setState({items: TodolistStore.getAllItems()});
+    }
+
+    componentWillMount() {
+        TodolistStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        TodolistStore.addChangeListener(this._onChange);
+    }
+
     // Every Component must render()
     render() {
         // Render() must return something or should return `null`;
@@ -194,7 +197,7 @@ class Todolist extends Component {
                 <div className="Todolist-body">
                     <div className="Todolist-add-item-container">
                         <form onSubmit={this.processSubmit}>
-                            <input className="Todolist-add-item" defaultValue={this.state.currentItem.description} type="text" ref={this.addItemItemInput} />
+                            <input className="Todolist-add-item" value={this.state.currentItem.description} type="text" onChange={this.onAddItemInputChange} />
                             <button type="submit">Submit</button>
                         </form>
                         {/*<span className="Todolist-current-item">{this.state.currentItem}</span>*/}
