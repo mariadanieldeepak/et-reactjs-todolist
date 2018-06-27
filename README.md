@@ -2,6 +2,26 @@ This is a practice project developed using ReactJS for [ET](https://github.com/e
 
 ## Changelog  
 
+### v0.6.1 (27 June 2018)
+**Check-in status**  
+- Refactored the edit and delete item functionality using Flux
+
+**Feedback**  
+
+### v0.6.0 (26 June 2018)
+**Check-in status**  
+- Refactored the add item functionality using Flux
+
+**Question** 
+- Can the TodolistStore have state?
+
+**Feedback**  
+- Looks like you have got a good grasp of Flux concept
+- The action `payload` doesn't have to be named `payload` and it can be named anything
+- *Can the TodolistStore have state?* The main reason for not having state is not to expose the class variable and 
+have it encapsulated. Since the data flow is uni-directional, it makes to have getters and not setters.
+
+
 ### v0.5.1 (26 June 2018)
 **Check-in status**  
 - Used ES6 shorthand assignment
