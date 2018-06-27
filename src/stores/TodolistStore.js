@@ -1,5 +1,5 @@
 import { EventEmitter } from 'events';
-import Dispatcher from '../dispatcher/dispatcher.js';
+import Dispatcher from '../dispatcher/Dispatcher';
 import ActionTypes from '../constants';
 
 const CHANGE = 'CHANGE';
@@ -31,21 +31,8 @@ class TodolistStore extends EventEmitter {
 
     // Returns the current store's state.
     getAllItems() {
-        return _walletState;
+        return _todolistState;
     }
-
-
-    // Calculate the total budget.
-    getTotalBudget() {
-        let totalBudget = 0;
-
-        _walletState.forEach((item) => {
-            totalBudget += parseFloat(item.amount);
-        });
-
-        return totalBudget;
-    }
-
 
     // Hooks a React component's callback to the CHANGED event.
     addChangeListener(callback) {
@@ -58,4 +45,4 @@ class TodolistStore extends EventEmitter {
     }
 }
 
-export default new WalletStore();
+export default new TodolistStore();

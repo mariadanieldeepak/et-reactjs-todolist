@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TodolistItem from './TodolistItem';
-import Button from "./Button";
+import TodolistAction from '../actions/TodolistActions';
+import TodolistStore from "../stores/TodolistStore";
 
 var id = 0;
 
@@ -21,6 +22,8 @@ class Todolist extends Component {
         this.handleShowIncompleteItems = this.handleShowIncompleteItems.bind(this);
 
         this.onItemCompleteChange = this.onItemCompleteChange.bind(this);
+
+        this._onChange = this._onChange.bind(this);
 
         this.state = {
             currentItem: this._getNewTodo(),
@@ -67,10 +70,13 @@ class Todolist extends Component {
 
         currentItem.id = ++id;
 
+        TodolistAction.addNewTodo(currentItem);
+
+        /*
         this.setState((prevState, props) => ({
             items: prevState.items.concat([currentItem])
         }));
-
+        */
         this.setState({currentItem: this._getNewTodo()});
     }
 
@@ -167,6 +173,18 @@ class Todolist extends Component {
                 return filter.value;
             }
         }
+    }
+
+    _onChange() {
+        this.setState({items: TodolistStore.getAllItems()});
+    }
+
+    componentWillMount() {
+        TodolistStore.addChangeListener(this._onChange);
+    }
+
+    componentWillUnmount() {
+        TodolistStore.addChangeListener(this._onChange);
     }
 
     // Every Component must render()
